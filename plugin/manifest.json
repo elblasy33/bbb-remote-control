@@ -1,0 +1,13 @@
+{
+  "requiredSdkVersion": "^1.0.0-beta.2",
+  "name": "RemoteControlPlugin",
+  "version": "0.1.0",
+  "javascriptEntrypointUrl": "RemoteControlPlugin.js",
+  "dataChannels": [
+    {
+      "name": "remote-control",
+      "pushPermission": ["all"],
+      "replaceOrDeletePermission": ["creator", "moderator"]
+    }
+  ]
+}

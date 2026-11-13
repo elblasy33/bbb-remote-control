@@ -1,0 +1,26 @@
+# RustDesk OSS ID/relay server, self-hosted on the BBB machine.
+# Ports (open in UFW by install-rustdesk-server.sh):
+#   21115/tcp  NAT type test      21116/tcp+udp  ID/rendezvous (hbbs)
+#   21117/tcp  relay (hbbr)       21118-21119    web client only — NOT opened
+# "-k _" makes both services require clients to know the server public key,
+# so strangers cannot use this server as a free relay.
+services:
+  hbbs:
+    container_name: rustdesk-hbbs
+    image: rustdesk/rustdesk-server:latest
+    command: hbbs -k _
+    volumes:
+      - ./data:/root
+    network_mode: host
+    depends_on:
+      - hbbr
+    restart: unless-stopped
+
+  hbbr:
+    container_name: rustdesk-hbbr
+    image: rustdesk/rustdesk-server:latest
+    command: hbbr -k _
+    volumes:
+      - ./data:/root
+    network_mode: host
+    restart: unless-stopped
